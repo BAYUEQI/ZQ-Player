@@ -7,7 +7,6 @@
       <n-collapse-item title="主题设置" name="theme">
         <n-card class="set-item">
           <div class="name">明暗模式
-            <n-text class="tip">我不知道怎么有些人喜欢浅色模式, 这真的太丑了</n-text>
           </div>
           <n-select
             v-model:value="themeType"
