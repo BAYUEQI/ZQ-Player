@@ -162,7 +162,8 @@ const userMenuSelect = (key) => {
   switch (key) {
     // 明暗切换
     case "darkOrlight":
-      settings.setThemeType(themeType.value === "light" ? "dark" : "light");
+      setting.setThemeType(themeType.value === "light" ? "dark" : "light");
+      setting.themeAuto = false;
       break;
     // 登录登出
     case "logoutOrlogin":
