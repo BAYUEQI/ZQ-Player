@@ -226,12 +226,12 @@ onBeforeUnmount(() => {
   }
   @media (max-width: 700px) {
     width: 100%;
-    margin: 0 4px;
+    margin-right: 12px;
     .input {
       width: 100%;
-      min-width: 0;
-      font-size: 16px;
-      height: 38px;
+      &.focus {
+        width: 100%;
+      }
     }
   }
   @media (max-width: 512px) {
