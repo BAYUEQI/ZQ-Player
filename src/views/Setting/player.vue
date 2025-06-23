@@ -25,7 +25,6 @@
       <n-switch 
         v-model:value="useMusicCache" 
         :round="false" 
-        :disabled="!checkPlatform.electron()"
       />
     </n-card>
     <n-card class="set-item">
