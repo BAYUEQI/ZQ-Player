@@ -227,13 +227,10 @@ const userMenuSelect = (key) => {
     }
   }
   @media (max-width: 700px) {
-    padding: 0;
-    .avatar {
-      margin: 0;
-    }
-    .user-data {
-      display: none;
-    }
+    height: 38px;
+    min-width: 38px;
+    .avatar { width: 38px; height: 38px; }
+    .user-data { display: none; }
   }
 }
 </style>
