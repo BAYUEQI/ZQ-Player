@@ -3,7 +3,6 @@
   <nav :class="{ 'main-nav': true, 'no-sider': !showSider }">
     <div class="left">
       <div :class="['logo', asideMenuCollapsed ? 'collapsed' : null]" @click="router.push('/')">
-        <!-- <n-avatar class="logo-img" src="/imgs/icons/favicon.png?asset" /> -->
         <n-icon class="logo-img" size="30">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -46,7 +45,6 @@
           </template>
         </n-button>
       </n-flex>
-      <!-- 搜索框 -->
       <SearchInp />
       <Transition name="fade" mode="out-in">
         <n-button
@@ -66,63 +64,35 @@
       </Transition>
     </div>
     <div class="right">
-      <!-- 全局菜单 -->
-      <!--n-button
-        :focusable="false"
-        class="settings"
-        circle
-        quaternary
-        @click="openSettings"
+      <n-button
+        class="main-menu"
+        secondary
+        strong
+        round
+        @click="drawerShow = true"
       >
         <template #icon>
           <n-icon>
-            <SvgIcon icon="round-settings" />
+            <SvgIcon icon="menu" />
           </n-icon>
         </template>
-      </n-button-->
-      <n-dropdown
-        :show="mainMenuShow"
-        :show-arrow="true"
-        :options="mainMenuOptions"
-        placement="bottom-end"
-        @clickoutside="mainMenuShow = false"
-      >
-        <n-button
-          :style="{ pointerEvents: mainMenuShow ? 'none' : 'auto' }"
-          :class="['main-menu', { show: !showSider }]"
-          secondary
-          strong
-          round
-          @click="mainMenuShow = !mainMenuShow"
-        >
-          <template #icon>
-            <n-icon>
-              <SvgIcon icon="menu" />
-            </n-icon>
-          </template>
-        </n-button>
-      </n-dropdown>
-      <!-- 用户信息 -->
+      </n-button>
       <userData />
-      <!-- TitleBar -->
       <TitleBar v-if="checkPlatform.electron()" />
     </div>
   </nav>
-  <!-- 设置弹窗组件 -->
   <settings ref="settingsRef" />
-  <!-- 新增：移动端菜单抽屉 -->
   <n-drawer v-model:show="drawerShow" placement="left" :width="240" :mask-closable="true" class="mobile-drawer">
     <Menu />
   </n-drawer>
 </template>
 
 <script setup>
-import { NScrollbar } from "naive-ui";
+import { ref } from "vue";
 import { storeToRefs } from "pinia";
+import { useRouter } from "vue-router";
 import { siteStatus, siteSettings } from "@/stores";
 import { checkPlatform } from "@/utils/helper";
-import { useRouter } from "vue-router";
-import { ref } from "vue";
 import settings from "@/components/Modal/Settings.vue"
 import Menu from "@/components/Global/Menu";
 import packageJson from "@/../package.json";
@@ -133,45 +103,21 @@ const sitesettings = siteSettings();
 const { asideMenuCollapsed, searchInputFocus } = storeToRefs(status);
 const { showGithub, showSider, themeAutoCover } = storeToRefs(sitesettings);
 
-// 站点信息
 const siteVersion = packageJson.version;
 const siteTemp = import.meta.env.RENDERER_VITE_SITE_TITLE;
 const siteName = siteTemp + " v." + siteVersion;
 
-// 打开 GitHub
 const openGithub = () => {
   console.log(packageJson.github);
   window.open(packageJson.github);
 };
 
-const settingsRef = ref(null)
+const settingsRef = ref(null);
 const openSettings = () => {
   if (settingsRef.value) {
     settingsRef.value.showModal();
   }
 };
-/*
-const openSettings = () => {
-  window.location.href = "/#/setting"; 
-}
-*/
-
-// 主菜单渲染
-const mainMenuShow = ref(false);
-const mainMenuOptions = computed(() => [
-  {
-    key: "menu",
-    type: "render",
-    props: {
-      onClick: () => (mainMenuShow.value = false),
-    },
-    render: () => {
-      return h(NScrollbar, { style: { maxHeight: "calc(100vh - 200px)", minWidth: "280px" } }, () =>
-        h(Menu),
-      );
-    },
-  },
-]);
 
 const drawerShow = ref(false);
 </script>
@@ -184,12 +130,14 @@ const drawerShow = ref(false);
   align-items: center;
   justify-content: space-between;
   padding: 0 16px;
+  
   .left,
   .right {
     display: flex;
     flex-direction: row;
     align-items: center;
   }
+  
   .logo {
     width: 224px;
     display: flex;
@@ -203,6 +151,7 @@ const drawerShow = ref(false);
       padding-left 0.3s;
     -webkit-app-region: no-drag;
     cursor: pointer;
+    
     .logo-img {
       width: 30px;
       height: 30px;
@@ -216,16 +165,19 @@ const drawerShow = ref(false);
         transform: scale(1);
       }
     }
+    
     .site-name {
       margin-left: 12px;
       font-size: 20px;
       font-weight: bold;
     }
+    
     &.collapsed {
       width: 48px;
       padding-left: 0;
     }
   }
+  
   .navigation {
     display: flex;
     flex-direction: row;
@@ -239,6 +191,7 @@ const drawerShow = ref(false);
       opacity 0.3s;
     overflow: hidden;
     -webkit-app-region: no-drag;
+    
     .nav-icon {
       border-radius: 8px;
       padding: 0 8px;
@@ -246,6 +199,7 @@ const drawerShow = ref(false);
         font-size: 24px;
       }
     }
+    
     @media (max-width: 700px) {
       &.hidden {
         opacity: 0;
@@ -254,17 +208,20 @@ const drawerShow = ref(false);
       }
     }
   }
+  
   .github {
-    margin-left: 12px; /* 左边距12px，用于与其他元素保持间距 */
+    margin-left: 12px;
     -webkit-app-region: no-drag;
   }
+  
   .settings {
-    margin-right: 12px; /* 右边距12px，用于与其他元素保持间距 */
+    margin-right: 12px;
     -webkit-app-region: no-drag;
     @media (max-width: 700px) {
       display: none;
     }
   }
+  
   .main-menu {
     -webkit-app-region: no-drag;
     margin-right: 12px;
@@ -290,6 +247,7 @@ const drawerShow = ref(false);
       margin-right: 12px;
     }
   }
+  
   @media (max-width: 900px) {
     .left {
       .logo {
@@ -302,32 +260,51 @@ const drawerShow = ref(false);
       }
     }
   }
+  
   @media (max-width: 700px) {
-    .main-nav {
-      flex-wrap: wrap;
-      padding: 0 6px;
-      .left {
-        width: 100%;
-        .logo {
-          width: 40px;
-          min-width: 40px;
-          margin-right: 6px;
-          .site-name { display: none; }
-        }
-        .navigation { display: none; }
-        .search-input { flex: 1; min-width: 0; margin-right: 6px; }
+    flex-wrap: wrap;
+    padding: 0 6px;
+    
+    .left {
+      width: 100%;
+      .logo {
+        width: 40px;
+        min-width: 40px;
+        margin-right: 6px;
+        .site-name { display: none; }
       }
-      .right {
-        .main-menu { display: flex !important; margin-right: 0; }
-        .user { margin-left: 0; }
-      }
+      .navigation { display: none; }
+      .search-input { flex: 1; min-width: 0; margin-right: 6px; }
     }
+    
+    .right {
+      position: fixed;
+      top: 0;
+      right: 6px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      
+      .main-menu { 
+        display: flex !important; 
+        margin-right: 6px;
+      }
+      .user { margin-left: 0; }
+    }
+    
     .github {
       display: none;
     }
   }
 }
+
 .mobile-drawer {
   z-index: 2000;
+  :deep(.n-drawer-content) {
+    padding: 0;
+  }
+  :deep(.n-drawer-body) {
+    padding: 0;
+  }
 }
 </style>
