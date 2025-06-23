@@ -381,6 +381,3 @@
 - [x] 支持修改全局字体
   > - [x] 同时支持单独修改歌词字体
 
-## ⭐ Star History
-
-[![Star History Chart](https://api.star-history.com/svg?repos=IamFurina/SPlayer&type=Date)](https://star-history.com/#IamFurina/SPlayer&Date)
