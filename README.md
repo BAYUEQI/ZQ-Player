@@ -48,9 +48,9 @@
 #### 以下是网易云API的部署
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/imsyys-projects/clone?repository-url=https://github.com/BAYUEQI/ZQ-API)
 #### 以下是UNM-Server的部署
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/imsyys-projects/clone?repository-url=https://github.com/IamFurina/Unm-server)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/imsyys-projects/clone?repository-url=https://github.com/BAYUEQI/ZQ-UNM)
 #### 以下是TTML歌词API的部署 (可选)
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/imsyys-projects/clone?repository-url=https%3A%2F%2Fgithub.com%2FIamFurina%2FLyric-Atlas-API)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/imsyys-projects/clone?repository-url=https://github.com/BAYUEQI/ZQ-Lyrics)
 ### 🔧 开始部署本体
 2. 点击本仓库右上角的 `Fork`，复制本仓库到你的 `GitHub` 账号
 3. 复制 `/.env.example` 文件并重命名为 `/.env`
@@ -151,18 +151,6 @@
    | `pnpm build:linux` | Linux    |
    | `pnpm build:mac`   | MacOS    |
 
-## 😘 鸣谢
-
-特此感谢为本项目提供支持与灵感的项目
-
-- [原版SPlayer](https://github.com/imsyy/splayer)
-- [NeteaseCloudMusicApi](https://github.com/Binaryify/NeteaseCloudMusicApi)
-- [YesPlayMusic](https://github.com/qier222/YesPlayMusic)
-- [UnblockNeteaseMusic](https://github.com/UnblockNeteaseMusic/server)
-- [Vue-mmPlayer](https://github.com/maomao1996/Vue-mmPlayer)
-- [refined-now-playing-netease](https://github.com/solstice23/refined-now-playing-netease)
-- [material-color-utilities](https://github.com/material-foundation/material-color-utilities)
-
 ## 📢 免责声明
 
 本项目部分功能使用了网易云音乐的第三方 API 服务，**仅供个人学习研究使用，禁止用于商业及非法用途**
@@ -172,17 +160,6 @@
 请使用者在使用本项目时遵守相关法律法规，**不要将本项目用于任何商业及非法用途。如有违反，一切后果由使用者自负。** 同时，使用者应该自行承担因使用本项目而带来的风险和责任。本项目开发者不对本项目所提供的服务和内容做出任何保证
 
 感谢您的理解
-
-## 📜 开源许可
-
-- **本项目仅供个人学习研究使用，禁止用于商业及非法用途**
-- 本项目基于 [GNU Affero General Public License (AGPL-3.0)](https://www.gnu.org/licenses/agpl-3.0.html) 许可进行开源
-  1. **修改和分发：** 任何对本项目的修改和分发都必须基于 AGPL-3.0 进行，源代码必须一并提供
-  2. **派生作品：** 任何派生作品必须同样采用 AGPL-3.0，并在适当的地方注明原始项目的许可证
-  3. **注明原作者：** 在任何修改、派生作品或其他分发中，必须在适当的位置明确注明原作者及其贡献
-  4. **免责声明：** 根据 AGPL-3.0，本项目不提供任何明示或暗示的担保。请详细阅读 [GNU Affero General Public License (AGPL-3.0)](https://www.gnu.org/licenses/agpl-3.0.html) 以了解完整的免责声明内容
-  5. **社区参与：** 欢迎社区的参与和贡献，我们鼓励开发者一同改进和维护本项目
-  6. **许可证链接：** 请阅读 [GNU Affero General Public License (AGPL-3.0)](https://www.gnu.org/licenses/agpl-3.0.html) 了解更多详情
 
 ## 📂 目录结构
 
