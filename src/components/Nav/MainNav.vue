@@ -110,10 +110,6 @@
   </nav>
   <!-- 设置弹窗组件 -->
   <settings ref="settingsRef" />
-  <!-- 新增：移动端菜单抽屉 -->
-  <n-drawer v-model:show="drawerShow" placement="left" :width="240" :mask-closable="true" class="mobile-drawer">
-    <Menu />
-  </n-drawer>
 </template>
 
 <script setup>
@@ -172,8 +168,6 @@ const mainMenuOptions = computed(() => [
     },
   },
 ]);
-
-const drawerShow = ref(false);
 </script>
 
 <style lang="scss" scoped>
@@ -303,31 +297,12 @@ const drawerShow = ref(false);
     }
   }
   @media (max-width: 700px) {
-    .main-nav {
-      flex-wrap: wrap;
-      padding: 0 6px;
-      .left {
-        width: 100%;
-        .logo {
-          width: 40px;
-          min-width: 40px;
-          margin-right: 6px;
-          .site-name { display: none; }
-        }
-        .navigation { display: none; }
-        .search-input { flex: 1; min-width: 0; margin-right: 6px; }
-      }
-      .right {
-        .main-menu { display: flex !important; margin-right: 0; }
-        .user { margin-left: 0; }
-      }
+    .left {
+      width: 100%;
     }
     .github {
       display: none;
     }
   }
-}
-.mobile-drawer {
-  z-index: 2000;
 }
 </style>
