@@ -1,52 +1,9 @@
 <template>
   <nav :class="{ 'main-nav': true, 'no-sider': !showSider }">
     <div class="left">
-      <div :class="['logo', asideMenuCollapsed ? 'collapsed' : null]" @click="router.push('/')">
-        <n-icon class="logo-img" size="30">
-          <!-- 你的LOGO SVG内容 -->
-        </n-icon>
-        <Transition name="fade" mode="out-in">
-          <n-text v-if="!asideMenuCollapsed && showSider" class="site-name">
-            {{ siteName }}
-          </n-text>
-        </Transition>
-      </div>
-      <n-flex :class="['navigation', { hidden: searchInputFocus }]" :size="6">
-        <n-button :focusable="false" class="nav-icon" quaternary @click="router.go(-1)">
-          <template #icon>
-            <n-icon>
-              <SvgIcon icon="chevron-left" />
-            </n-icon>
-          </template>
-        </n-button>
-        <n-button :focusable="false" class="nav-icon" quaternary @click="router.go(1)">
-          <template #icon>
-            <n-icon>
-              <SvgIcon icon="chevron-right" />
-            </n-icon>
-          </template>
-        </n-button>
-      </n-flex>
-      <SearchInp />
-      <Transition name="fade" mode="out-in">
-        <n-button
-          v-if="showGithub"
-          :focusable="false"
-          class="github"
-          circle
-          quaternary
-          @click="openGithub"
-        >
-          <template #icon>
-            <n-icon size="20">
-              <SvgIcon icon="github" />
-            </n-icon>
-          </template>
-        </n-button>
-      </Transition>
+      <!-- ...左侧内容... -->
     </div>
     <div class="right">
-      <!-- 只保留这个菜单按钮 -->
       <n-button
         class="main-menu"
         secondary
@@ -65,7 +22,13 @@
     </div>
   </nav>
   <settings ref="settingsRef" />
-  <n-drawer v-model:show="drawerShow" placement="left" :width="240" :mask-closable="true" class="mobile-drawer">
+  <n-drawer
+    v-model:show="drawerShow"
+    placement="left"
+    :width="240"
+    :mask-closable="false"  <!-- 关键：禁止点击遮罩关闭 -->
+    class="mobile-drawer"
+  >
     <Menu />
   </n-drawer>
 </template>
