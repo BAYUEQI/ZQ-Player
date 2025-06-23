@@ -1,0 +1,47 @@
+{
+  "rewrites": [
+    {
+      "source": "/:path",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/api/netease/:apiurl*",
+      "destination": "https://music-api.focalors.ltd/:apiurl*"
+    },
+    {
+      "source": "/api/unblock/:match*",
+      "destination": "https://unm-server.focalors.ltd/:match*"
+    },
+    {
+      "source": "/api/ttml/:ttmlurl*",
+      "destination": "https://lyrics.focalors.ltd/:ttmlurl*"
+    },
+    {
+      "source": "/api/kuwo/songcdn/:kuwourl*",
+      "destination": "http://lx.sycdn.kuwo.cn/:kuwourl*"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",  
+      "headers": [
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"  
+        },
+        {
+          "key": "Access-Control-Allow-Methods",
+          "value": "GET, POST, OPTIONS" 
+        },
+        {
+          "key": "Access-Control-Allow-Headers",
+          "value": "*"  
+        },
+        {
+          "key": "Access-Control-Allow-Credentials",
+          "value": "true"
+        }
+      ]
+    }
+  ]
+}

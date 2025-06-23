@@ -1,0 +1,62 @@
+# Dev 分支推送部署预览
+## 仅部署 Win 端
+name: Build Dev
+
+on:
+  push:
+    branches:
+      - dev
+
+jobs:
+  release:
+    name: Build and electron app
+    runs-on: windows-latest
+
+    steps:
+      # 检出 Git 仓库
+      - name: Check out git repository
+        uses: actions/checkout@v4
+      # 安装 Node.js
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20.x"
+      # 复制环境变量文件
+      - name: Copy .env.example
+        run: |
+          if (-not (Test-Path .env)) {
+            Copy-Item .env.example .env
+          } else {
+            Write-Host ".env file already exists. Skipping the copy step."
+          }
+      # 安装项目依赖
+      - name: Install Dependencies
+        run: npm install
+      # 构建 Electron App
+      - name: Build Electron App
+        run: npm run build:win
+        env:
+          GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+      # 清理不必要的构建产物
+      - name: Cleanup Artifacts
+        run: |
+          npx rimraf "dist/!(*.exe)"
+      # 上传构建产物
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: SPlayer-dev
+          path: dist
+      # 创建 GitHub Release
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        if: startsWith(github.ref, 'refs/tags/v')
+        with:
+          tag_name: ${{ github.ref }}
+          name: ${{ github.ref }}-rc
+          body: This version is still under development, currently only provides windows version, non-developers please do not use!
+          draft: false
+          prerelease: true
+          files: dist/*.exe
+        env:
+          GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
