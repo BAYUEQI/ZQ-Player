@@ -1,44 +1,4 @@
-# SPlayer
-
-> [!WARNING]
-> 近期我发现有部分用户在`.env`文件中填入了我的网易云API, 可能会有人不懂, `Vercel`是有**500GB**流量限制的
-> 这种现象导致了我的演示站点一直超出限制导致站点无法访问, 所以呼吁大家不要把我的API填入自己的`配置文件`内
-> 要是还发现有人在肆无忌惮的使用我的`API`, 我将会**封禁你的IP**并且把你的`网易云Cookie`**公开**到当前仓库中
-
-#### 一个简约的音乐播放器
-
-![main](/screenshots/SPlayer.jpg)
-
-## 说明
-
-> [!IMPORTANT]
->
-> # Q&A
->
-> ### 你为什么要维护这个已经过时的版本
->
-> 那是因为在imsyy的dev分支将会向本地播放器发展, 且把在线版本进入基本维护模式而导致有些功能将不会在网页端生效, 该版本是最后一个支持移动端和网页部署的版本, 我将会尽量把功能与dev分支同步, 以便能使用到与dev分支相同的功能.
->
-> ### 严肃警告
->
-> - 请务必遵守 [GNU Affero General Public License (AGPL-3.0)](https://www.gnu.org/licenses/agpl-3.0.html) 许可协议
-> - 在您的修改、演绎、分发或派生项目中，必须同样采用 **AGPL-3.0** 许可协议，**并在适当的位置包含本项目的许可和版权信息**
-> - **禁止用于售卖或其他商业用途**，如若发现，作者保留追究法律责任的权利
-> - 若发现未遵守 **AGPL-3.0** 许可协议的行为，**本项目将永久停更**
-> - 感谢您的尊重与理解
-
-- 本项目采用 [Vue 3](https://cn.vuejs.org/) 全家桶和 [Naïve UI](https://www.naiveui.com/) 组件库及 [Electron](https://www.electronjs.org/zh/docs/latest/) 开发
-- 支持网页端与客户端，由于设备有限，目前仅适配 `Win`，其他平台可自行解决兼容性后进行构建
-- 仅对移动端做了基础适配，**不保证功能全部可用**
-
-  > 请注意，本程序不打算开发移动端，也不会对移动端进行完美适配，仅保证基础可用性
-
-- 欢迎各位大佬 `Star` 😍
-
-## 👀 Demo
-
-- [SPlayer](https://player.focalors.ltd/)
-  > 该版本为dev分支
+# ZQ-Player 一个简约的音乐播放器
 
 ## 🎉 功能
 
@@ -69,52 +29,6 @@
 - 📱 移动端基础适配
 - ~~🌐 `i18n` 支持~~
 
-## 🖼️ screenshots
-
-> 开发中，仅供参考
-
-<details>
-<summary>主页面</summary>
-
-![主页面](/screenshots/SPlayer%20-%20主页面.jpg)
-
-</details>
-
-<details>
-<summary>播放页面</summary>
-
-![播放页面](/screenshots/SPlayer%20-%20播放页面.jpg)
-
-</details>
-
-<details>
-<summary>发现页面</summary>
-
-![发现页面](/screenshots/SPlayer%20-%20发现页面.jpg)
-
-</details>
-
-<details>
-<summary>歌单页面</summary>
-
-![发现页面](/screenshots/SPlayer%20-%20歌单页面.jpg)
-
-</details>
-
-<details>
-<summary>评论页面</summary>
-
-![发现页面](/screenshots/SPlayer%20-%20评论页面.jpg)
-
-</details>
-
-<details>
-<summary>本地音乐</summary>
-
-![发现页面](/screenshots/SPlayer%20-%20本地音乐.jpg)
-
-</details>
-
 ### 本地构建
 
 > [!WARNING]
@@ -132,7 +46,7 @@
 
 1. 本程序依赖 [NeteaseCloudMusicApi](https://github.com/IamFurina/NeteaseCloudMusicApi) 运行以及[UNM-Server](https://act.focalors.ltd/unm-server)，并按照步骤部署, 请确保您已成功部署该项目，并成功取得在线访问地址
 #### 以下是网易云API的部署
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/imsyys-projects/clone?repository-url=https://github.com/IamFurina/NeteaseCloudMusicAPI)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/imsyys-projects/clone?repository-url=https://github.com/BAYUEQI/ZQ-API)
 #### 以下是UNM-Server的部署
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/imsyys-projects/clone?repository-url=https://github.com/IamFurina/Unm-server)
 #### 以下是TTML歌词API的部署 (可选)
