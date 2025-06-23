@@ -543,15 +543,6 @@ onMounted(() => {
     }
   }
 }
-@media (max-width: 700px) {
-  .main-menu {
-    width: 100vw !important;
-    min-width: 0 !important;
-    border-radius: 0 !important;
-    box-shadow: none !important;
-    font-size: 16px;
-  }
-}
 </style>
 
 <!-- 特殊样式 -->
