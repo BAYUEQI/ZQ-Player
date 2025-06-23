@@ -1,12 +1,12 @@
 {
-  "name": "splayer",
+  "name": "ZQ-Player",
   "version": "2.6.0",
   "description": "一个部署简单且界面美观的音乐播放器",
   "main": "./out/main/index.js",
   "author": "IamFurina",
   "home": "https://index.focalors.ltd",
-  "github": "https://github.com/IamFurina/SPlayer",
-  "repository": "github:IamFurina/SPlayer",
+  "github": "https://github.com/BAYUEQI/ZQ-Player",
+  "repository": "github:BAYUEQI/ZQ-Player",
   "license": "AGPL-3.0",
   "license-file": "LICENSE",
   "engines": {
