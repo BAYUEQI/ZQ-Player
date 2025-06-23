@@ -27,7 +27,6 @@
 - 💬 支持评论区及评论点赞
 - 🌓 明暗模式自动 / 手动切换
 - 📱 移动端基础适配
-- ~~🌐 `i18n` 支持~~
 
 ### 本地构建
 
@@ -94,7 +93,6 @@
 
 6. 将 `Build and Output Settings` 中的 `Output Directory` 改为 `out/renderer`
 
-   ![build](/screenshots/build.jpg)
 
 7. 点击 `Deploy`，即可成功部署
 
