@@ -22,7 +22,6 @@
               },
             ]"
             class="set"
-            :disabled="1===1"
             @update:value="themeAuto = false"
           />
         </n-card>
