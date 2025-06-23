@@ -12,7 +12,7 @@
             清除
           </n-button>
         </Transition>
-        <n-button strong secondary @click="choosePath">
+        <n-button :disabled="!checkPlatform.electron()" strong secondary @click="choosePath">
           更改
         </n-button>
       </n-flex>
@@ -51,28 +51,8 @@ const {
 
 // 更改下载目录
 const choosePath = async () => {
-  if (checkPlatform.electron()) {
-    const selectedDir = await electron.ipcRenderer.invoke("selectDir", true);
-    if (selectedDir) downloadPath.value = selectedDir;
-  } else {
-    // Web端使用原生文件选择器
-    const input = document.createElement('input');
-    input.type = 'file';
-    input.webkitdirectory = true;
-    input.directory = true;
-    
-    input.onchange = (e) => {
-      const files = e.target.files;
-      if (files.length > 0) {
-        // 获取选择的文件夹路径
-        const path = files[0].webkitRelativePath.split('/')[0];
-        downloadPath.value = path;
-        $message.success("下载目录已更新");
-      }
-    };
-    
-    input.click();
-  }
+  const selectedDir = await electron.ipcRenderer.invoke("selectDir", true);
+  if (selectedDir) downloadPath.value = selectedDir;
 };
 </script>
 <style lang="scss" scoped>
