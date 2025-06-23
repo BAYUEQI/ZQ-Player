@@ -132,7 +132,7 @@ const { showGithub, showSider, themeAutoCover } = storeToRefs(sitesettings);
 // 站点信息
 const siteVersion = packageJson.version;
 const siteTemp = import.meta.env.RENDERER_VITE_SITE_TITLE;
-const siteName = siteTemp + " v." + siteVersion;
+const siteName = siteTemp;
 
 // 打开 GitHub
 const openGithub = () => {
