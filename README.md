@@ -43,7 +43,7 @@
 
 ### 🔧 部署相应依赖
 
-1. 本程序依赖 [NeteaseCloudMusicApi](https://github.com/IamFurina/NeteaseCloudMusicApi) 运行以及[UNM-Server](https://act.focalors.ltd/unm-server)，并按照步骤部署, 请确保您已成功部署该项目，并成功取得在线访问地址
+1. 本程序依赖 [NeteaseCloudMusicApi](https://github.com/BAYUEQI/ZQ-API) 运行以及[UNM-Server](https://github.com/BAYUEQI/ZQ-UNM)，并按照步骤部署, 请确保您已成功部署该项目，并成功取得在线访问地址
 #### 以下是网易云API的部署
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/imsyys-projects/clone?repository-url=https://github.com/BAYUEQI/ZQ-API)
 #### 以下是UNM-Server的部署
