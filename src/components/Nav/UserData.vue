@@ -164,7 +164,7 @@ const userMenuOptions = computed(() => {
     arr.push({
       label: "捐赠入口",
       key: "donate",
-      icon: renderIcon("donate"),
+      icon: renderIcon("favorite-rounded"),
     });
   }
   arr.push({
