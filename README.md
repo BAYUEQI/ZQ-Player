@@ -1,28 +1,4 @@
-# ZQ-Player
-
-
-#### 一个简约且强大的音乐播放器
-
-
-## 说明
-
-> [!IMPORTANT]
->
-> ### 严肃警告
->
-> - 请务必遵守 [GNU Affero General Public License (AGPL-3.0)](https://www.gnu.org/licenses/agpl-3.0.html) 许可协议
-> - 您的修改、演绎、分发或派生项目，必须同样采用 **AGPL-3.0** 许可协议，并在适当位置包含本项目的许可和版权信息
-> - **禁止用于售卖或其他商业用途**，如若发现，作者保留追究法律责任的权利
-> - 若发现未遵守 **AGPL-3.0** 许可协议的行为，**本项目将永久停更**
-> - 感谢您的尊重与理解
-
-- 本项目基于 [Vue 3](https://cn.vuejs.org/) 全家桶、[Naïve UI](https://www.naiveui.com/) 组件库及 [Electron](https://www.electronjs.org/zh/docs/latest/) 开发
-- 支持网页端与客户端，目前仅适配 `Win`，其他平台可自行解决兼容性后进行构建
-- 移动端仅做基础适配，**不保证全部功能可用**
-
-  > 请注意，本程序不打算开发移动端，也不会对移动端进行完美适配，仅保证基础可用性
-
-- 欢迎各位大佬 `Star` 😍
+# ZQ-Player 一个简约且强大的音乐播放器
 
 ## 🎉 功能
 
