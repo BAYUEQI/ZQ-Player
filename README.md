@@ -157,9 +157,6 @@
 
 ## 📂 目录结构
 
-<details>
-<summary>查看目录结构详情</summary>
-
 ```dir
 ├── auto-imports.d.ts                     # 自动导入TypeScript声明文件
 ├── commit.example                        # Git提交信息示例
