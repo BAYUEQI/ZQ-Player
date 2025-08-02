@@ -1,0 +1,19 @@
+{
+  "buildCommand": "pnpm run build",
+  "installCommand": "pnpm install",
+  "outputDirectory": "out/renderer",
+  "rewrites": [
+    {
+      "source": "/:path",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/api/:apiurl*",
+      "destination": "https://musicapi.qizou.dpdns.org/:apiurl*"
+    },
+    {
+      "source": "/api/ttml/:ttmlurl*",
+      "destination": "https://lyrics.qizou.dpdns.org/:ttmlurl*"
+    }
+  ]
+}
