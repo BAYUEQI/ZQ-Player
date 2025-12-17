@@ -1,0 +1,29 @@
+name: 遇到问题
+description: 关于使用过程中遇到的问题
+title: 请填写标题
+labels: [bug]
+body:
+  - type: input
+    validations:
+      required: true
+    attributes:
+      label: "使用的浏览器"
+      placeholder: "Edge / Chrome / Firefox / Safari"
+  - type: input
+    validations:
+      required: true
+    attributes:
+      label: "当前 Node.js 及 npm 版本"
+      placeholder: "v14.17.0 / 6.14.15"
+  - type: input
+    validations:
+      required: true
+    attributes:
+      label: "当前版本"
+      placeholder: "v4.25.0"
+  - type: textarea
+    id: other
+    attributes:
+      label: "具体信息"
+      description: "请填写完整的复现步骤和遇到的问题，包括但不限于报错信息、控制台输出、网络请求等"
+      placeholder: "请填写具体的复现步骤和遇到的问题"
