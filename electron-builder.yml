@@ -21,7 +21,7 @@ win:
   # 可执行文件名
   executableName: ZQ-Player
   # 应用程序的图标文件路径
-  icon: public/imgs/icons/favicon.ico
+  icon: public/imgs/icons/favicon-512x512.png
   # 构建类型
   target:
     - nsis
