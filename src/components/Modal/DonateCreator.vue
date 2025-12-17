@@ -2,12 +2,8 @@
   <n-modal v-model:show="show" preset="dialog" title="捐赠支持作者" :mask-closable="true" :close-on-esc="true" @after-leave="onClose">
     <div class="donate-content">
       <div class="donate-imgs">
-        <!-- 你可以在这里添加多张图片，src为相对路径 -->
-        <!--img v-for="(img, idx) in donateImgs" :key="idx" :src="img" class="donate-img" alt="捐赠二维码" style="width:180px;height:180px;" /-->
+        <img v-for="(img, idx) in donateImgs" :key="idx" :src="img" class="donate-img" alt="捐赠二维码" />
       </div>
-    <a href="https://blog.520jacky.dpdns.org/img/8.jpg" target="_blank" rel="noopener" style="margin-bottom: 8px; color: #409eff; text-decoration: underline;">
-        跳转到捐赠页面
-    </a>
       <div class="donate-tip">感谢您的支持！</div>
     </div>
   </n-modal>
@@ -18,13 +14,14 @@ import { ref, watch, defineExpose } from 'vue';
 import { NModal } from 'naive-ui';
 
 const show = ref(false);
-const donateImgs = ref([
-  'https://github.com/iamfurina/splayer/blob/master-fix/public/imgs/pic/donate.png?raw=true'// ,'/imgs/donate/wechat.png', '/imgs/donate/alipay.png'
-]);
+const defaultImg = 'https://blog.520jacky.dpdns.org/img/8.jpg';
+const donateImgs = ref([defaultImg]);
 
 function open(imgs) {
   if (Array.isArray(imgs) && imgs.length) {
     donateImgs.value = imgs;
+  } else {
+    donateImgs.value = [defaultImg];
   }
   show.value = true;
 }
@@ -32,8 +29,8 @@ function close() {
   show.value = false;
 }
 function onClose() {
-  // 关闭后清空图片
-  donateImgs.value = [];
+  // 关闭后恢复默认图片
+  donateImgs.value = [defaultImg];
 }
 
 defineExpose({ open, close });
@@ -53,8 +50,8 @@ defineExpose({ open, close });
   margin-bottom: 12px;
 }
 .donate-img {
-  width: 120px;
-  height: 120px;
+  width: 240px;
+  height: auto;
   object-fit: contain;
   border-radius: 8px;
   border: 1px solid #eee;
