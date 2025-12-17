@@ -3,11 +3,12 @@
     <n-alert type="info" :bordered="bordered" style="margin-bottom: 16px;">
       可在官方的
       <n-a href="https://music.163.com/" target="_blank">网页端</n-a>
-      获取Cookie格式: <code>MUSIC_U=xxxxxx;</code>
+      获取Cookie，
+      格式: <code>MUSIC_U=xxxxxx;</code>
     </n-alert>
     <n-input v-model:value="cookie" :autosize="{ minRows: 3, maxRows: 6 }" type="textarea" placeholder="请输入 Cookie" />
     <n-flex class="menu">
-      <n-button type="primary" tag="a" href="https://github.com/BAYUEQI/ZQ-Player?tab=readme-ov-file#-%E7%BD%91%E6%98%93%E4%BA%91%E9%9F%B3%E4%B9%90cooike%E8%8E%B7%E5%8F%96" target="_blank">获取Cookie教程</n-button>
+      <n-button type="primary" tag="a" href="https://github.com/BAYUEQI/ZQ-Player/blob/main/README.md#-%E7%BD%91%E6%98%93%E4%BA%91%E9%9F%B3%E4%B9%90cookie%E8%8E%B7%E5%8F%96" target="_blank">获取Cookie教程</n-button>
       <n-button type="primary" @click="login">登录</n-button>
     </n-flex>
   </div>
