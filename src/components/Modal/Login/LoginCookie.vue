@@ -3,8 +3,7 @@
     <n-alert type="info" :bordered="bordered" style="margin-bottom: 16px;">
       可在官方的
       <n-a href="https://music.163.com/" target="_blank">网页端</n-a>
-      获取Cookie，
-      格式: <code>MUSIC_U=xxxxxx;</code>
+      获取Cookie，Cookie格式: <code>MUSIC_U=xxxxxx;</code>
     </n-alert>
     <n-input v-model:value="cookie" :autosize="{ minRows: 3, maxRows: 6 }" type="textarea" placeholder="请输入 Cookie" />
     <n-flex class="menu">
