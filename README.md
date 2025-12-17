@@ -142,14 +142,14 @@
 ## 网易云音乐cooike获取
 1.使用电脑打开网易云网页
 这里推荐使用Edge或Google浏览器，在浏览器访问网易云音乐的官网，登录自己的账号；一切准备就绪后进入个人主页进入下一步操作
-![alt text](public/imgs/1.png)
+![alt text](public/imgs/pic/1.png)
 2.使用浏览器开发者工具获取Cookie
 进入到个人主页后，按下“F12”键，单击“网络”
-![alt text](public/imgs/2.png)
+![alt text](public/imgs/pic/2.png)
 此时需要刷新一下页面，按下“Ctrl+R”组合键，此时单击列表出现的第一个选项
-![alt text](public/imgs/3.png)
+![alt text](public/imgs/pic/3.png)
 进入之后下拉，找到“Cookie”字眼，将`MUSIC_U=xxxx;`全部复制下来（注意！不要复制错了、多了或者少了）
-![alt text](public/imgs/4.png)
+![alt text](public/imgs/pic/4.png)
 
 
 
