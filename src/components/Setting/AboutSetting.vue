@@ -198,51 +198,22 @@ const getContributors = async () => {
 // 特别鸣谢
 const contributors = [
   {
-    name: "NeteaseCloudMusicApi",
-    url: "https://github.com/Binaryify/NeteaseCloudMusicApi",
+    name: "ZQ-MusicApi",
+    url: "https://github.com/BAYUEQI/ZQ-MusicApi",
     description: "网易云音乐 API",
   },
-  // https://github.com/neteasecloudmusicapienhanced/api-enhanced
   {
-    name: "NeteaseCloudMusicApiEnhanced",
-    url: "https://github.com/neteasecloudmusicapienhanced/api-enhanced",
-    description: "网易云音乐 API 备份 + 增强",
+    name: "ZQ-UNM",
+    url: "https://github.com/BAYUEQI/ZQ-UNM",
+    description: "解锁不可播放音乐",
   },
   {
-    name: "YesPlayMusic",
-    url: "https://github.com/qier222/YesPlayMusic",
-    description: "高颜值的第三方网易云播放器",
-  },
-  {
-    name: "UnblockNeteaseMusic",
-    url: "https://github.com/UnblockNeteaseMusic/server",
-    description: "Revive unavailable songs for Netease Cloud Music",
-  },
-  {
-    name: "applemusic-like-lyrics",
-    url: "https://github.com/Steve-xmh/applemusic-like-lyrics",
-    description: "类 Apple Music 歌词显示组件库",
+    name: "ZQ-Lyrics",
+    url: "https://github.com/BAYUEQI/ZQ-Lyrics",
+    description: "歌词显示组件库",
   },
 ];
 
-// 社区数据
-const communityData = [
-  {
-    name: "加入交流群",
-    url: "https://qm.qq.com/cgi-bin/qm/qr?k=2-cVSf1bE0AvAehCib00qFEFdUvPaJ_k&jump_from=webapi&authKey=1NEhib9+GsmsXVo2rCc0IbRaVHeeRXJJ0gbsyKDcIwDdAzYySOubkFCvkV32+7Cw",
-    icon: "QQ",
-  },
-  {
-    name: "GitHub",
-    url: packageJson.github,
-    icon: "Github",
-  },
-  {
-    name: "官方博客",
-    url: packageJson.blog,
-    icon: "RssFeed",
-  },
-];
 
 // 更新日志数据
 const updateData = ref<UpdateLogType[] | null>(null);
