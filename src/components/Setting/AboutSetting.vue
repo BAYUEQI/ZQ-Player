@@ -1,334 +1,308 @@
-import { songLevelData, sortOptions } from "@/utils/meta";
+<template>
+  <div class="setting-type">
+    <div class="set-list">
+      <n-h3 prefix="bar"> 关于软件 </n-h3>
+      <n-card class="set-item">
+        <n-flex align="center" class="about">
+          <SvgIcon name="SPlayer" size="26" />
+          <n-text class="logo-name">ZQ-Player</n-text>
+          <n-tag v-if="statusStore.isDeveloperMode" size="small" type="warning" round> DEV </n-tag>
+          <n-tag :bordered="false" size="small" type="primary" round @click="openDeveloperMode">
+            {{ packageJson.version }}
+          </n-tag>
+        </n-flex>
+        <n-button
+          :loading="statusStore.updateCheck"
+          type="primary"
+          strong
+          secondary
+          @click="checkUpdate"
+        >
+          {{ statusStore.updateCheck ? "检查更新中" : "检查更新" }}
+        </n-button>
+      </n-card>
+      <n-collapse-transition :show="!!updateData">
+        <n-card class="set-item update-data">
+          <n-flex class="version">
+            <n-text>最新版本</n-text>
+            <n-tag :bordered="false" size="small" type="primary">
+              {{ newVersion?.version || "v0.0.0" }}
+            </n-tag>
+            <n-tag v-if="newVersion?.prerelease" class="test" size="small" type="warning">
+              测试版
+            </n-tag>
+            <n-text :depth="3" class="time">{{ newVersion?.time }}</n-text>
+          </n-flex>
+          <div class="markdown-body" v-html="newVersion?.changelog" @click="jumpLink" />
+        </n-card>
+      </n-collapse-transition>
+    </div>
+    <div class="set-list">
+      <n-h3 prefix="bar"> 特别鸣谢 </n-h3>
+      <n-flex :size="12" class="link">
+        <n-card
+          v-for="(item, index) in contributors"
+          :key="index"
+          class="link-item"
+          hoverable
+          @click="openLink(item.url)"
+        >
+          <n-flex vertical :gap="4">
+            <n-text class="name" strong> {{ item.name }} </n-text>
+            <n-text class="tip" :depth="3" style="font-size: 12px">
+              {{ item.description }}
+            </n-text>
+          </n-flex>
+        </n-card>
+      </n-flex>
+    </div>
+    <div class="set-list">
+      <n-h3 prefix="bar"> 开发人员 </n-h3>
+      <n-flex :size="12" class="link">
+        <n-card
+          v-for="(item, index) in developers"
+          :key="index"
+          class="link-item"
+          hoverable
+          @click="openLink(item.url)"
+        >
+          <n-flex align="center">
+            <n-avatar round :size="40" :src="item.avatar" fallback-src="/images/avatar.jpg?asset" />
+            <n-flex vertical :gap="4">
+              <n-text class="name" strong> {{ item.name }} </n-text>
+              <n-text class="tip" :depth="3" style="font-size: 12px">
+                {{ item.role }}
+              </n-text>
+            </n-flex>
+          </n-flex>
+        </n-card>
+      </n-flex>
+    </div>
+    <Transition name="fade" mode="out-in">
+      <div v-if="allContributors.length > 0" class="set-list">
+        <n-collapse arrow-placement="right">
+          <n-collapse-item title="更多贡献者" name="1">
+            <n-flex :size="12" class="link">
+              <n-card
+                v-for="(item, index) in allContributors"
+                :key="index"
+                class="link-item"
+                hoverable
+                @click="openLink(item.url)"
+              >
+                <n-flex align="center">
+                  <n-avatar round :size="40" :src="item.avatar" fallback-src="/images/avatar.jpg?asset" />
+                  <n-flex vertical :gap="4">
+                    <n-text class="name" strong> {{ item.name }} </n-text>
+                    <n-text class="tip" :depth="3" style="font-size: 12px">
+                      {{ item.role }}
+                    </n-text>
+                  </n-flex>
+                </n-flex>
+              </n-card>
+            </n-flex>
+          </n-collapse-item>
+        </n-collapse>
+      </div>
+    </Transition>
+    <div class="set-list">
+      <n-h3 prefix="bar"> 历史版本 </n-h3>
+      <n-collapse-transition :show="oldVersion?.length > 0">
+        <n-collapse accordion>
+          <n-collapse-item
+            v-for="(item, index) in oldVersion"
+            :key="index"
+            :title="item.version"
+            :name="item.version"
+          >
+            <n-card class="set-item update-data">
+              <n-flex class="version" justify="space-between">
+                <n-tag :bordered="false" size="small" type="primary">
+                  {{ item?.version || "v0.0.0" }}
+                </n-tag>
+                <n-text :depth="3" class="time">{{ item?.time }}</n-text>
+              </n-flex>
+              <div class="markdown-body" v-html="item?.changelog" @click="jumpLink" />
+            </n-card>
+          </n-collapse-item>
+        </n-collapse>
+      </n-collapse-transition>
+    </div>
+  </div>
+</template>
 
-export type MetaData = {
-  id: number;
+<script setup lang="ts">
+import type { UpdateLogType } from "@/types/main";
+import { getUpdateLog, openLink } from "@/utils/helper";
+import { debounce } from "lodash-es";
+import { useStatusStore } from "@/stores";
+import { isElectron } from "@/utils/env";
+import packageJson from "@/../package.json";
+
+const statusStore = useStatusStore();
+
+// 开发者模式点击次数
+const developerModeClickCount = ref(0);
+
+// 开发人员
+type DeveloperType = {
   name: string;
-  cover?: string;
-  alias?: string[];
-};
-
-export type DjData = {
-  id: number;
-  name: string;
-  creator?: string;
-};
-
-export type CoverSize = {
-  s: string;
-  m: string;
-  l: string;
-  xl: string;
-};
-
-/** 音质 */
-export enum QualityType {
-  /** 超清母带 */
-  Master = "Master", // jymaster
-  /** 杜比全景声 */
-  Dolby = "Dolby", // db
-  /** 沉浸环绕声 */
-  Spatial = "Spatial", // sky
-  /** 高清环绕声 */
-  Surround = "Surround", // jyeffect
-  /** Hi-Res */
-  HiRes = "Hi-Res", // hr
-  /** 无损 */
-  SQ = "SQ", // sq / flac
-  /** 高质量 */
-  HQ = "HQ", // h: 320kbps
-  /** 中质量 */
-  MQ = "MQ", // m: 192kbps
-  /** 低质量 */
-  LQ = "LQ", // l: 128kbps
-}
-
-export type UserType = {
-  id: number;
-  name: string;
-  avatarUrl: string | undefined;
-  vipType?: number;
-  vipLevel?: number;
-  vipIconUrl?: string;
-  isAnnualCount?: boolean;
-};
-
-/** 歌曲信息 */
-export type SongType = {
-  /** 歌曲id */
-  id: number;
-  /** 歌曲名称 */
-  name: string;
-  /** 歌手 */
-  artists: MetaData[] | string;
-  /** 专辑 */
-  album: MetaData | string;
-  /** 电台 */
-  dj?: DjData;
-  /** 封面 */
-  cover: string;
-  /** 封面大小 */
-  coverSize?: CoverSize;
-  /** 时长 */
-  duration: number;
-  /**
-   * 原曲类型
-   * 0: 未知 | 1: 原曲 | 2: 翻唱
-   */
-  originCoverType?: number;
-  /** 别名 */
-  alia?: string;
-  /** 免费或无版权
-   * 1: VIP 歌曲 | 4: 购买专辑 | 8: 非会员可免费播放低音质，会员可播放高音质及下载 */
-  free: 0 | 1 | 4 | 8;
-  /** MV */
-  mv: number | null;
-  /** 本地路径 */
-  path?: string;
-  /** 是否为云盘歌曲 */
-  pc?: boolean;
-  /** 大小 */
-  size?: number;
-  /** 音质 */
-  quality?: QualityType;
-  /** 创建时间 */
-  createTime?: number;
-  /** 更新时间 */
-  updateTime?: number;
-  /** 播放量 */
-  playCount?: number;
-  /**
-   * 歌曲类型
-   * song: 歌曲 | radio: 电台
-   */
-  type: "song" | "radio";
-  /**
-   * 是否为心动模式插入的歌曲，
-   * 用于在退出心动模式时清理这些歌曲
-   */
-  isRecommendation?: boolean;
-};
-
-// Cover
-export type CoverType = {
-  id: number;
-  name: string;
-  cover: string;
-  coverSize?: CoverSize;
-  description?: string;
-  creator?: UserType;
-  artists?: MetaData[] | string;
-  count?: number;
-  tags?: string[];
-  userId?: number | null;
-  privacy?: number;
-  playCount?: number;
-  liked?: boolean;
-  likedCount?: number;
-  commentCount?: number;
-  shareCount?: number;
-  subCount?: number;
-  createTime?: number;
-  updateTime?: number;
-  loading?: boolean;
-  updateTip?: string;
-  tracks?: {
-    first: string;
-    second: string;
-  }[];
-};
-
-/** 本地歌单类型 */
-export interface LocalPlaylistType {
-  /** 歌单ID（16位数字） */
-  id: number;
-  /** 歌单名称 */
-  name: string;
-  /** 歌单描述 */
-  description?: string;
-  /** 歌单封面 */
-  cover?: string;
-  /** 歌曲ID数组 */
-  songs: string[];
-  /** 创建时间 */
-  createTime: number;
-  /** 更新时间 */
-  updateTime: number;
-}
-
-// Artist
-export type ArtistType = {
-  id: number;
-  name: string;
-  cover: string;
-  coverSize?: CoverSize;
-  alia?: string;
-  identify?: string;
-  description?: string;
-  albumSize?: number;
-  musicSize?: number;
-  mvSize?: number;
-  fansSize?: number;
-};
-
-// Comment
-export type CommentType = {
-  id: number;
-  content: string;
-  beReplied?: {
-    content: string;
-    user: UserType;
-  };
-  time: number;
-  user: UserType;
-  ip?: {
-    ip: string;
-    location: string;
-  };
-  liked?: boolean;
-  likedCount?: number;
-};
-
-/**
- * 歌词内容类型
- */
-export type LyricContentType = {
-  /** 歌词开始时间 */
-  time: number;
-  /** 歌词结束时间 */
-  endTime: number;
-  /** 歌词持续时间 */
-  duration: number;
-  /** 歌词内容 */
-  content: string;
-  /** 是否以空格结尾 */
-  endsWithSpace: boolean;
-};
-
-/** 歌词类型 */
-export type LyricType = {
-  /** 歌词开始时间 */
-  time: number;
-  /** 歌词结束时间 */
-  endTime: number;
-  /** 翻译歌词 */
-  tran?: string;
-  /** 音译歌词 */
-  roma?: string;
-  /** 是否为背景歌词 */
-  isBG?: boolean;
-  /** 是否为对唱歌词 */
-  isDuet?: boolean;
-  /** 歌词内容 */
-  content: string;
-  /** 歌词内容数组 */
-  contents: LyricContentType[];
-};
-
-export interface RGB {
-  r: number;
-  g: number;
-  b: number;
-}
-
-export interface ColorScheme {
-  [key: string]: RGB;
-}
-
-export interface CoverColors {
-  main?: RGB;
-  light?: ColorScheme;
-  dark?: ColorScheme;
-}
-
-export interface CatType {
-  name: string;
-  category: number;
-  hot?: boolean;
-  count?: number;
-}
-
-// userData
-export interface UserDataType {
-  userId: number;
-  userType: number;
-  vipType: number;
-  name: string;
-  level?: number;
-  avatarUrl?: string;
-  backgroundUrl?: string;
-  createTime?: number;
-  createDays?: number;
-  artistCount?: number;
-  djRadioCount?: number;
-  mvCount?: number;
-  subPlaylistCount?: number;
-  createdPlaylistCount?: number;
-}
-
-export interface UserLikeDataType {
-  songs: number[];
-  playlists: CoverType[];
-  artists: ArtistType[];
-  albums: CoverType[];
-  mvs: CoverType[];
-  djs: CoverType[];
-}
-
-// sort
-export type SortType = keyof typeof sortOptions;
-
-/** 歌曲元素音质类型 */
-export type SongLevelType = keyof typeof songLevelData;
-
-/** 歌曲元素音质数据 */
-export type SongLevelDataType = {
-  name: string;
-  level: string;
-  value: SongLevelType;
-  size?: number;
-  br?: number;
-};
-
-// setting
-export type SettingType =
-  | "general"
-  | "play"
-  | "lyrics"
-  | "keyboard"
-  | "local"
-  | "third"
-  | "other"
-  | "about";
-
-// UpdateLog
-export type UpdateLogType = {
-  version: string;
-  changelog: string;
-  time: number;
+  role: string;
   url: string;
-  prerelease: boolean;
-  force?: boolean;
+  avatar: string;
 };
 
-// 文件信息
-export interface FileInfoType {
-  url: string;
-  sha512: string;
-  size: number;
-}
+const developers = ref<DeveloperType[]>([]);
+const allContributors = ref<DeveloperType[]>([]);
 
-// 更新信息
-export interface UpdateInfoType {
-  tag: string;
-  version: string;
-  files: FileInfoType[];
-  path: string;
-  sha512: string;
-  releaseDate: string;
-  releaseName: string;
-  releaseNotes: string;
-  prerelease: boolean;
-}
+// 获取贡献者
+const getContributors = async () => {
+  try {
+    const response = await fetch(
+      "https://api.github.com/repos/BAYUEQI/ZQ-Player/contributors?per_page=100&anon=true",
+    );
+    const data = await response.json();
+    if (Array.isArray(data)) {
+      const list = data
+        .filter((item: any) => item.login !== "type-bot" && item.type !== "Bot")
+        .map((item: any) => ({
+          name: item.login || item.name,
+          role: item.login === "BAYUEQI" ? "Owner / Full Stack" : "Contributor",
+          url: item.html_url || "",
+          avatar: item.avatar_url || "/images/avatar.jpg?asset",
+        }));
+      developers.value = list.slice(0, 6);
+      allContributors.value = list.slice(6);
+    }
+  } catch (error) {
+    console.error("Failed to fetch contributors:", error);
+    // Fallback or empty state handling if needed, currently just empty
+  }
+};
 
-// 登录方式
-export type LoginType = "qr" | "phone" | "cookie" | "uid";
+// 特别鸣谢
+const contributors = [
+  {
+    name: "ZQ-MusicApi",
+    url: "https://github.com/BAYUEQI/ZQ-MusicApi",
+    description: "网易云音乐 API",
+  },
+  {
+    name: "ZQ-UNM",
+    url: "https://github.com/BAYUEQI/ZQ-UNM",
+    description: "解锁不可播放音乐",
+  },
+  {
+    name: "ZQ-Lyrics",
+    url: "https://github.com/BAYUEQI/ZQ-Lyrics",
+    description: "歌词显示组件库",
+  },
+];
+
+
+// 更新日志数据
+const updateData = ref<UpdateLogType[] | null>(null);
+
+// 最新版本
+const newVersion = computed<UpdateLogType | undefined>(() => updateData.value?.[0]);
+
+// 历史版本
+const oldVersion = computed<UpdateLogType[]>(() => {
+  const oldData = updateData.value?.slice(1);
+  return oldData ? oldData : [];
+});
+
+// 检查更新
+const checkUpdate = debounce(
+  () => {
+    if (!isElectron) {
+      window.open(packageJson.github + "/releases", "_blank");
+      return;
+    }
+    statusStore.updateCheck = true;
+    window.electron.ipcRenderer.send("check-update", true);
+  },
+  300,
+  { leading: true, trailing: false },
+);
+
+// 链接跳转
+const jumpLink = (e: MouseEvent) => {
+  const target = e.target as HTMLElement;
+  if (target.tagName !== "A") {
+    return;
+  }
+  e.preventDefault();
+  openLink((target as HTMLAnchorElement).href);
+};
+
+// 获取更新日志
+const getUpdateData = async () => (updateData.value = await getUpdateLog());
+
+// 打开开发者模式
+const openDeveloperMode = useThrottleFn(() => {
+  developerModeClickCount.value++;
+  if (developerModeClickCount.value >= 5 && developerModeClickCount.value < 8) {
+    if (statusStore.developerMode) {
+      window.$message.info("已处于开发者模式！");
+      developerModeClickCount.value = 0;
+      return;
+    }
+    window.$message.info(`再点击${8 - developerModeClickCount.value}次以开启开发者模式`);
+  } else if (developerModeClickCount.value >= 8) {
+    developerModeClickCount.value = 0;
+    statusStore.developerMode = true;
+    window.$message.warning("开发者模式已开启，请谨慎使用！");
+  }
+}, 100);
+
+onMounted(() => {
+  getUpdateData();
+  getContributors();
+});
+</script>
+
+<style lang="scss" scoped>
+.about {
+  .logo-name {
+    font-size: 16px;
+  }
+  .n-tag {
+    border-radius: 6px;
+  }
+}
+.update-data {
+  :deep(.n-card__content) {
+    flex-direction: column !important;
+    align-items: normal !important;
+  }
+  .version {
+    padding-left: 4px;
+    .n-tag {
+      pointer-events: none;
+      border-radius: 6px;
+    }
+    .time {
+      margin-left: auto;
+      font-size: 13px;
+    }
+  }
+}
+.link {
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: 12px !important;
+}
+.link-item {
+  border-radius: 8px;
+  cursor: pointer;
+  :deep(.n-card__content) {
+    display: flex;
+    align-items: center;
+    padding: 12px;
+  }
+  .n-icon {
+    margin-right: 6px;
+  }
+}
+</style>
