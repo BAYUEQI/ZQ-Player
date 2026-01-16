@@ -154,11 +154,10 @@ jobs:
       # 创建 GitHub Release 并上传所有产物
       - name: Create GitHub Release and Upload Assets
         uses: softprops/action-gh-release@v2
-        continue-on-error: false
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           # 自动生成 Release 说明
-          # generate_release_notes: true
+          generate_release_notes: true
           # 发布为草稿
           draft: false
           # 发布为预发布
@@ -175,8 +174,13 @@ jobs:
             artifacts/**/*.rpm
             artifacts/**/*.pacman
             artifacts/**/*.tar.gz
-            artifacts/**/latest*.yml
-          # 增加重试机制
-          fail_on_unmatched_files: false
-          # 并行上传数量限制
-          parallelism: 3
+            artifacts/**/latest.yml
+            artifacts/**/latest-mac.yml
+            artifacts/**/latest-linux.yml
+            artifacts/**/latest-linux-arm64.yml
+          # 避免因文件模式不匹配而失败
+          fail_on_unmatched_files: true
+          # 禁用自动删除旧资产，减少 API 调用
+          delete_old_assets: false
+          # 限制并行上传数量，减少 API 压力
+          parallelism: 2
