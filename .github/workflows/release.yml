@@ -154,7 +154,7 @@ jobs:
       # 创建 GitHub Release 并上传所有产物
       - name: Create GitHub Release and Upload Assets
         uses: softprops/action-gh-release@v2
-        continue-on-error: true
+        continue-on-error: false
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           # 自动生成 Release 说明
@@ -167,7 +167,6 @@ jobs:
           tag_name: ${{ github.ref_name }}
           # 全部上传
           files: |
-            !artifacts/**/*-unpacked/**
             artifacts/**/*.exe
             artifacts/**/*.dmg
             artifacts/**/*.zip
@@ -175,7 +174,9 @@ jobs:
             artifacts/**/*.deb
             artifacts/**/*.rpm
             artifacts/**/*.pacman
-            artifacts/**/*.snap
             artifacts/**/*.tar.gz
-            artifacts/**/*.yml
-            artifacts/**/*.blockmap
+            artifacts/**/latest*.yml
+          # 增加重试机制
+          fail_on_unmatched_files: false
+          # 并行上传数量限制
+          parallelism: 3
