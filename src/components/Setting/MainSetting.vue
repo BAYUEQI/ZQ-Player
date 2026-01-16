@@ -45,6 +45,8 @@
         <ThirdSetting v-else-if="activeKey === 'third'" />
         <!-- 其他 -->
         <OtherSetting v-else-if="activeKey === 'other'" />
+        <!-- 关于 -->
+        <AboutSetting v-else-if="activeKey === 'about'" />
         <!-- 空白 -->
         <n-text v-else class="error">暂无该设置项</n-text>
       </Transition>
@@ -59,6 +61,7 @@ import { renderIcon } from "@/utils/helper";
 import { isElectron } from "@/utils/env";
 import { useStatusStore } from "@/stores";
 import packageJson from "@/../package.json";
+import AboutSetting from "./AboutSetting.vue";
 
 const props = defineProps<{ type: SettingType; scrollTo?: string }>();
 
@@ -108,6 +111,11 @@ const menuOptions: MenuOption[] = [
     key: "other",
     label: "其他设置",
     icon: renderIcon("SettingsOther"),
+  },
+  {
+    key: "about",
+    label: "关于软件",
+    icon: renderIcon("Info"),
   },
 ];
 
