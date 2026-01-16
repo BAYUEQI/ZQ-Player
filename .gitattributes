@@ -1,0 +1,3 @@
+*.sh text eol=lf
+
+src/assets/ffmpeg/decode-audio.js linguist-generated
